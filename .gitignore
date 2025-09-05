@@ -1,0 +1,6 @@
+.cache
+.rgignore
+libcsvparse.a
+csvparse.o
+./test
+compile_commands.json
