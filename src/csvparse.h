@@ -22,4 +22,24 @@
 
 #pragma once
 
-const char ***csvparse(const char *filepath, int *size);
+// Parses the file at 'filepath' and returns the data, setting 'size' to the
+// data's array size. If an error occurs, returns NULL and sets 'err' to
+// indicate the error.
+// WARNING: data must be freed to avoid memory leakage. Call csvfree(data) when
+// done with it.
+// 'err' = 0 means no error.
+// 'err' = 1 means file opening error, use errno for more details.
+// 'err' = 2 means a cell starts with " and doesn't end with it.
+// 'err' = 3 means a cell is too big.
+// 'err' = 4 means a row has too many cells.
+// 'err' = 5 means too many rows.
+const char ***csvparse(const char *filepath, int *err);
+
+// Returns the total rows contained in the parsed csv.
+unsigned int csvrowscount(const char ***data);
+
+// Returns the size of a row in the parsed csv.
+unsigned int csvrowlen(const char **data);
+
+// Frees the memory of the parsed csv data.
+void csvfree(const char ***data);

@@ -1,4 +1,5 @@
 LIB_NAME = csvparse
+TEST_RUNNER_NAME = test
 
 CC = clang
 AR = ar
@@ -17,7 +18,7 @@ all:
 	$(AR) rcs lib$(LIB_NAME).a $(LIB_NAME).o
 
 test:
-	$(CC) tests/test.c -o test -I./src -L./ -lcsvparse
+	$(CC) tests/$(TEST_RUNNER_NAME).c -o $(TEST_RUNNER_NAME) -I./src -L./ -lcsvparse -fsanitize=address
 
 clean:
-	rm lib$(LIB_NAME).a $(LIB_NAME).o test
+	rm lib$(LIB_NAME).a $(LIB_NAME).o $(TEST_RUNNER_NAME)
