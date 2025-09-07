@@ -64,6 +64,8 @@ The library is also very simple, you can just download both `src/csvparse.c` and
 
 ## Examples
 
+### Game development example
+
 Game development example, let's say you want to keep some game design data on spreadsheets so your game designers don't need to look at code to modify it, for example, when loading player stats:
 
 ```
@@ -104,6 +106,8 @@ Player *NewPlayer() {
 ```
 
 Because we are accessing the data with hard coded "magic numbers", this example wouldn't work if we changed the structure of the csv file, like adding new rows, columns or reordering the rows.
+
+### Localization example
 
 Localization example, this one using `csvrowlen()` and `csvrowscount()` and being more resistant to changing the file. Let's say you have the following i18n.csv file:
 
@@ -156,6 +160,8 @@ const char *translate(const char *key, const char *language) {
 ```
 
 This example only relies on the first row being the row that identifies the languages and the first column being the keys. You can add more language and more keys in the future and this function won't break.
+
+### Error handling example
 
 Last example, for error handling.
 
