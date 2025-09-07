@@ -31,23 +31,24 @@ void test1(int *errors) {
     expect(csvrowscount(data) == 2, errors);
 
     printf(RESET
-           "Got csvrowlen(data[0]) = %d, expected 3 ", csvrowlen(data[0]));
-    expect(csvrowlen(data[0]) == 3, errors);
+           "Got csvrowlen(data[0]) = %d, expected 4 ", csvrowlen(data[0]));
+    expect(csvrowlen(data[0]) == 4, errors);
 
     printf(RESET
            "Got csvrowlen(data[1]) = %d, expected 4 ", csvrowlen(data[0]));
     expect(csvrowlen(data[1]) == 4, errors);
 
     printf(RESET
-           "\nData points obtained:\n%s, %s, %s\n%s, %s, %s, %s",
-           data[0][0], data[0][1], data[0][2],
+           "\nData points obtained:\n%s, %s, %s, %s\n%s, %s, %s, %s",
+           data[0][0], data[0][1], data[0][2], data[0][3],
            data[1][0], data[1][1], data[1][2], data[1][3]);
     printf(RESET
-           "\nExpected:\ntest1, 123, with comma, at end of row"
+           "\nExpected:\n, test1, 123, with comma, at end of row"
            "\ntest2, , with, comma, aaa\n");
-    expect(!strcmp(data[0][0], "test1") &&
-           !strcmp(data[0][1], "123") &&
-           !strcmp(data[0][2], "with comma, at end of row") &&
+    expect(!strcmp(data[0][0], "") &&
+           !strcmp(data[0][1], "test1") &&
+           !strcmp(data[0][2], "123") &&
+           !strcmp(data[0][3], "with comma, at end of row") &&
            !strcmp(data[1][0], "test2") &&
            !strcmp(data[1][1], "") &&
            !strcmp(data[1][2], "with, comma") &&
