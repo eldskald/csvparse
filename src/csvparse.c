@@ -9,6 +9,7 @@
 #define __CSV_MAX_CELL_SIZE 1024
 
 unsigned int csvrowlen(const char **row) {
+    if (row == NULL) return 0;
     unsigned int length = 0;
     while (row[length] != NULL) {
         length++;
@@ -17,6 +18,7 @@ unsigned int csvrowlen(const char **row) {
 }
 
 unsigned int csvrowscount(const char ***data) {
+    if (data == NULL) return 0;
     unsigned int count = 0;
     while (data[count] != NULL) {
         count++;
@@ -52,13 +54,41 @@ const char ***_getfinalresult(const char ***result) {
     return final;
 }
 
+void _error(FILE *file, const char ***result, const char **currRow) {
+    fclose(file);
+    int rowsCount = csvrowscount(result);
+    int currRowLength = csvrowlen(currRow);
+    for (int i = 0; i < rowsCount; i++) {
+        int rowLength = csvrowlen(result[i]);
+        for (int j = 0; j < rowLength; j++) {
+            free((void *)result[i][j]);
+        }
+        free(result[i]);
+    }
+    for (int i = 0; i < currRowLength; i++) {
+        free((void *)currRow[i]);
+    }
+}
+
+void csvfree(const char ***data) {
+    if (data == NULL) return;
+    int rowsCount = csvrowscount(data);
+    for (int i = 0; i < rowsCount; i++) {
+        int rowLength = csvrowlen(data[i]);
+        for (int j = 0; j < rowLength; j++) {
+            free((void *)data[i][j]);
+        }
+        free(data[i]);
+    }
+    free(data);
+}
+
 const char ***csvparse(const char *filepath, int *err) {
     *err = 0;
 
     FILE *file = fopen(filepath, "r");
     if (file == NULL) {
         *err = 1;
-        fclose(file);
         return NULL;
     }
 
@@ -75,19 +105,19 @@ const char ***csvparse(const char *filepath, int *err) {
         buffer[1] = '\0';
 
         // Checking size limits
-        if (strlen(currCell) >= __CSV_MAX_CELL_SIZE) {
+        if (strlen(currCell) >= __CSV_MAX_CELL_SIZE - 1) {
+            _error(file, result, currRow);
             *err = 3;
-            fclose(file);
             return NULL;
         }
-        if (csvrowlen(currRow) >= __CSV_MAX_COLUMNS) {
+        if (csvrowlen(currRow) >= __CSV_MAX_COLUMNS - 1) {
+            _error(file, result, currRow);
             *err = 4;
-            fclose(file);
             return NULL;
         }
-        if (csvrowscount(result) >= __CSV_MAX_ROWS) {
+        if (csvrowscount(result) >= __CSV_MAX_ROWS - 1) {
+            _error(file, result, currRow);
             *err = 5;
-            fclose(file);
             return NULL;
         }
 
@@ -102,9 +132,9 @@ const char ***csvparse(const char *filepath, int *err) {
             lastChar = '"';
             continue;
         }
-        if (justEndedQuotCell && buffer[0] != ',') {
+        if (justEndedQuotCell && buffer[0] != ',' && buffer[0] != '\n') {
+            _error(file, result, currRow);
             *err = 2;
-            fclose(file);
             return NULL;
         }
 
@@ -117,9 +147,12 @@ const char ***csvparse(const char *filepath, int *err) {
             continue;
         }
 
-        // Dealing with linebreaks
+        // Dealing with linebreaks.
         if (buffer[0] == '\n') {
+
+            // Skip empty lines.
             if (lastChar == '\n') continue;
+
             if (lastChar != ',') _storedatapoint(currCell, currRow);
             _storerow(currRow, result);
             justEndedQuotCell = false;
@@ -136,16 +169,4 @@ const char ***csvparse(const char *filepath, int *err) {
 
     fclose(file);
     return _getfinalresult(result);
-}
-
-void csvfree(const char ***data) {
-    int rowsCount = csvrowscount(data);
-    for (int i = 0; i < rowsCount; i++) {
-        int rowLength = csvrowlen(data[i]);
-        for (int j = 0; j < rowLength; j++) {
-            free((void *)data[i][j]);
-        }
-        free(data[i]);
-    }
-    free(data);
 }
