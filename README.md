@@ -208,3 +208,8 @@ Check the `tests/test.c` file to see what tests are being run. I'm using `--fsan
 ## License
 
 MIT license. Use it for whatever you want, leaving the notice on the header file would be enough for me.
+
+## History
+
+- September 7th, 2025:
+  Initial release.
