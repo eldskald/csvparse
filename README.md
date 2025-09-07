@@ -58,7 +58,7 @@ Also, just so you know, internally the array of rows and each array of cells has
 
 ## Installation
 
-It is compiled and meant to be statically linked. Run `make` and it will generate a `libcsvparse.a` for you to link on your project. The header file is at `src/csvparse.h`.
+It is compiled and meant to be statically linked. It uses `clang` on POSIX systems and `MingGW` on Windows. Run `make` and it will generate a `libcsvparse.a` for you to link on your project. The header file is at `src/csvparse.h`.
 
 The library is also very simple, you can just download both `src/csvparse.c` and `src/csvparse.h` files and include them in your project yourself if you don't want to deal with linking. They are very small and shouldn't increase compilation times, and also allows you to modify them if you need more functionalities.
 
