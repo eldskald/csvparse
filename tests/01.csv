@@ -1,2 +1,2 @@
 ,test1,123,"with comma, at end of row"
-test2,,"with, comma",aaa
+test2,,"with, comma",aaa,bbb

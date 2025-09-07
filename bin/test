@@ -5,4 +5,8 @@ make
 make test
 echo ""
 ./test
+if [[ $? -ne 0 ]]; then
+    make clean > /dev/null 2>&1
+    exit 1
+fi
 make clean > /dev/null 2>&1

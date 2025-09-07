@@ -35,7 +35,7 @@ void test1(int *errors) {
     expect(csvrowlen(data[0]) == 4, errors);
 
     printf(RESET
-           "Got csvrowlen(data[1]) = %d, expected 4 ", csvrowlen(data[0]));
+           "Got csvrowlen(data[1]) = %d, expected 4 ", csvrowlen(data[1]));
     expect(csvrowlen(data[1]) == 4, errors);
 
     printf(RESET
@@ -78,19 +78,19 @@ void test2(int *errors) {
     expect(csvrowlen(data[0]) == 1, errors);
 
     printf(RESET
-           "Got csvrowlen(data[1]) = %d, expected 3 ", csvrowlen(data[0]));
+           "Got csvrowlen(data[1]) = %d, expected 3 ", csvrowlen(data[1]));
     expect(csvrowlen(data[1]) == 3, errors);
 
     printf(RESET
-           "Got csvrowlen(data[2]) = %d, expected 1 ", csvrowlen(data[0]));
+           "Got csvrowlen(data[2]) = %d, expected 1 ", csvrowlen(data[2]));
     expect(csvrowlen(data[2]) == 1, errors);
 
     printf(RESET
-           "Got csvrowlen(data[3]) = %d, expected 1 ", csvrowlen(data[0]));
+           "Got csvrowlen(data[3]) = %d, expected 1 ", csvrowlen(data[3]));
     expect(csvrowlen(data[3]) == 1, errors);
 
     printf(RESET
-           "Got csvrowlen(data[4]) = %d, expected 4 ", csvrowlen(data[0]));
+           "Got csvrowlen(data[4]) = %d, expected 4 ", csvrowlen(data[4]));
     expect(csvrowlen(data[4]) == 4, errors);
 
     printf(RESET
