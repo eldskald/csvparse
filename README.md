@@ -58,9 +58,15 @@ Also, just so you know, internally the array of rows and each array of cells has
 
 ## Installation
 
-It is compiled and meant to be statically linked. It uses `clang` on POSIX systems and `MingGW` on Windows. Run `make` and it will generate a `libcsvparse.a` for you to link on your project. The header file is at `src/csvparse.h`.
+There are two options: you can compile it and statically link it to your project, or you can use a header-only version. Because the library is miniscule, the header-only version shouldn't really increase the compilation time of your project, but there is also the option to statically link it in case you like to keep them out of your compiler.
 
-The library is also very simple, you can just download both `src/csvparse.c` and `src/csvparse.h` files and include them in your project yourself if you don't want to deal with linking. They are very small and shouldn't increase compilation times, and also allows you to modify them if you need more functionalities.
+### Statically linked version
+
+It uses `clang` on POSIX systems and `MingGW` on Windows, trying to detect if you are on Windows automatically. Run `make` and it will generate a `libcsvparse.a` for you to link on your project. The header file is at `src/csvparse.h`. You can also define the compiler with the `CC` variable in case you want to use a different compiler or do cross-compiling, like `make CC=gcc` to use `gcc`.
+
+### Header-only version
+
+Run `make header-only` to create `csvparse.h` header for you to include in your project. You need to define `#define CSVPARSE_IMPLEMENTATION` before including the header in one of your files to include in it the implementation of the functions to be compiled.
 
 ## Examples
 
