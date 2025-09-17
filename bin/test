@@ -1,8 +1,30 @@
 #!/bin/bash
 
 make clean > /dev/null 2>&1
+
+echo ""
+echo "Compiling statically linked version..."
+echo ""
 make
-make test
+make test-statically-linked
+echo ""
+echo "Compiling finished."
+echo ""
+./test
+if [[ $? -ne 0 ]]; then
+    make clean > /dev/null 2>&1
+    exit 1
+fi
+make clean > /dev/null 2>&1
+echo ""
+
+echo ""
+echo "Compiling header-only version..."
+echo ""
+make header-only
+make test-header-only
+echo ""
+echo "Compiling finished."
 echo ""
 ./test
 if [[ $? -ne 0 ]]; then

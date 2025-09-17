@@ -30,8 +30,11 @@ header-only:
 	rm .buffer
 	echo "#endif" >> csvparse.h
 
-test:
+test-statically-linked:
 	$(CC) tests/$(TEST_RUNNER_NAME).c -o $(TEST_RUNNER_NAME) -I./src -L./ -lcsvparse -fsanitize=address
+
+test-header-only:
+	$(CC) tests/$(TEST_RUNNER_NAME).c -o $(TEST_RUNNER_NAME) -I./ -fsanitize=address -DHEADER_ONLY
 
 clean:
 	rm lib$(LIB_NAME).a $(LIB_NAME).o $(TEST_RUNNER_NAME) csvparse.h
