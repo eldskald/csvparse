@@ -1,11 +1,11 @@
 #include "csvparse.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
-#define __CSV_MAX_COLUMNS   128
-#define __CSV_MAX_ROWS      1024
+#define __CSV_MAX_COLUMNS 128
+#define __CSV_MAX_ROWS 1024
 #define __CSV_MAX_CELL_SIZE 1024
 
 unsigned int csvrowlen(const char **row) {
@@ -92,9 +92,9 @@ const char ***csvparse(const char *filepath, int *err) {
         return NULL;
     }
 
-    const char **result[__CSV_MAX_ROWS] = { NULL };
-    const char *currRow[__CSV_MAX_COLUMNS] = { NULL };
-    char currCell[__CSV_MAX_CELL_SIZE] = { '\0' };
+    const char **result[__CSV_MAX_ROWS] = {NULL};
+    const char *currRow[__CSV_MAX_COLUMNS] = {NULL};
+    char currCell[__CSV_MAX_CELL_SIZE] = {'\0'};
     char lastChar = '\0';
 
     bool currCellStartsWithQuot = false;
@@ -139,7 +139,8 @@ const char ***csvparse(const char *filepath, int *err) {
         }
 
         // Dealing with commas.
-        if (buffer[0] == ',' && !(currCellStartsWithQuot && !justEndedQuotCell)) {
+        if (buffer[0] == ',' &&
+            !(currCellStartsWithQuot && !justEndedQuotCell)) {
             _storedatapoint(currCell, currRow);
             justEndedQuotCell = false;
             currCellStartsWithQuot = false;

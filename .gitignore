@@ -4,4 +4,3 @@ libcsvparse.a
 csvparse.o
 csvparse.h
 ./test
-compile_commands.json
