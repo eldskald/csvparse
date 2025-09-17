@@ -1,0 +1,14 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-o",
+      "csvparse.o",
+      "src/csvparse.c"
+    ],
+    "directory": "/home/rafael/dev/csvparse",
+    "file": "/home/rafael/dev/csvparse/src/csvparse.c",
+    "output": "/home/rafael/dev/csvparse/csvparse.o"
+  }
+]
