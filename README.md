@@ -210,6 +210,7 @@ If you want to process bigger files, you can change the limits yourself on `src/
 ## Tests
 
 Check the `tests/test.c` file to see what tests are being run. I'm using `--fsanitize=address` to make sure there are no memory leaks.
+I'm also using `clang-tidy` and `clang-format` to lint and format.
 
 ## License
 
@@ -217,5 +218,9 @@ MIT license. Use it for whatever you want, leaving the notice on the header file
 
 ## History
 
-- September 7th, 2025:
-  Initial release.
+- v1.1.0 - September 17th, 2025:
+  - Add header-only version.
+  - Add linting and formatting.
+
+- v1.0.0 - September 7th, 2025:
+  - Initial release.
