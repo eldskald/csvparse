@@ -83,7 +83,10 @@ void csvfree(const char ***data) {
     free(data);
 }
 
-const char ***csvparse(const char *filepath, int *err) {
+const char ***csvparse_with_settings(const char *filepath,
+                                     int *err,
+                                     char separator,
+                                     char delimiter) {
     *err = 0;
 
     FILE *file = fopen(filepath, "r");
@@ -121,30 +124,30 @@ const char ***csvparse(const char *filepath, int *err) {
             return NULL;
         }
 
-        // Dealing with quotation marks.
-        if (strlen(currCell) == 0 && buffer[0] == '"') {
+        // Dealing with string delimiter.
+        if (strlen(currCell) == 0 && buffer[0] == delimiter) {
             currCellStartsWithQuot = true;
-            lastChar = '"';
+            lastChar = delimiter;
             continue;
         }
-        if (currCellStartsWithQuot && buffer[0] == '"') {
+        if (currCellStartsWithQuot && buffer[0] == delimiter) {
             justEndedQuotCell = true;
-            lastChar = '"';
+            lastChar = delimiter;
             continue;
         }
-        if (justEndedQuotCell && buffer[0] != ',' && buffer[0] != '\n') {
+        if (justEndedQuotCell && buffer[0] != separator && buffer[0] != '\n') {
             _error(file, result, currRow);
             *err = 2;
             return NULL;
         }
 
-        // Dealing with commas.
-        if (buffer[0] == ',' &&
+        // Dealing with separator.
+        if (buffer[0] == separator &&
             !(currCellStartsWithQuot && !justEndedQuotCell)) {
             _storedatapoint(currCell, currRow);
             justEndedQuotCell = false;
             currCellStartsWithQuot = false;
-            lastChar = ',';
+            lastChar = separator;
             continue;
         }
 
@@ -154,7 +157,7 @@ const char ***csvparse(const char *filepath, int *err) {
             // Skip empty lines.
             if (lastChar == '\n') continue;
 
-            if (lastChar != ',') _storedatapoint(currCell, currRow);
+            if (lastChar != separator) _storedatapoint(currCell, currRow);
             _storerow(currRow, result);
             justEndedQuotCell = false;
             currCellStartsWithQuot = false;
@@ -170,4 +173,8 @@ const char ***csvparse(const char *filepath, int *err) {
 
     fclose(file);
     return _getfinalresult(result);
+}
+
+const char ***csvparse(const char *filepath, int *err) {
+    return csvparse_with_settings(filepath, err, ',', '"');
 }

@@ -37,6 +37,13 @@
 // 'err' = 5 means too many rows.
 const char ***csvparse(const char *filepath, int *err);
 
+// Same as csvparse(), except you can set a different separator other than ','
+// and different string delimiters other than '"'
+const char ***csvparse_with_settings(const char *filepath,
+                                     int *err,
+                                     char separator,
+                                     char delimiter);
+
 // Returns the total rows contained in the parsed csv.
 unsigned int csvrowscount(const char ***data);
 

@@ -39,6 +39,16 @@ csvrowlen(data[1]) = 4;
 csvrowlen(data[2]) = 2;
 ```
 
+There is also the `csvparse_with_settings("filepath", &err, separator, delimiter)` function, which is a version of `csvparse()` that allows you for setting different cell separators and/or string delimiters. For example:
+
+```
+Name;Email;Phone;Age
+John Doe;johndoe@email.com;12341234,34
+Dont Track Me;throwaway@email.com
+```
+
+Same file as before but with `';'` instead of `','` for separator. In order to parse this, you have to call `csvparse_with_settings("filepath", &err, ';', '"')` to obtain the same array as before.
+
 Lastly, there is the `csvfree()` function. Call it after you're done processing your csv data.
 
 ```c
@@ -217,6 +227,9 @@ I'm also using `clang-tidy` and `clang-format` to lint and format.
 MIT license. Use it for whatever you want, leaving the notice on the header file would be enough for me.
 
 ## History
+
+- v1.2.0 - March 21th, 2026:
+  - Add `csvparse_with_settings()` for parsing with different cell separators and string delimiters.
 
 - v1.1.0 - September 17th, 2025:
   - Add header-only version.
